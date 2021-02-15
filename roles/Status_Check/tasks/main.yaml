@@ -1,0 +1,12 @@
+---
+  - name: Checking Website
+    uri:
+      url: http://{{public_ip}}
+      status_code: 200
+    register: web_working
+    ignore_errors: true
+  - name: Restarting Web Server
+    systemd:
+      name: nginx
+      state: restarted
+    when: web_working.status != 200

@@ -1,0 +1,13 @@
+---
+  - hosts: all
+    name: Installing Nginx
+    become: yes
+    roles:
+      - {role: nginx-install}
+  - hosts: all
+    name: Verifying
+    become: yes
+    vars:
+      - public_ip: "{{ hostvars['server'].ansible_host }}"
+    roles:
+      - {role: Status_Check}
